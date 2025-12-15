@@ -5,8 +5,7 @@
 This package contains dummy servers for testing CVLab
 
 ## Contents
-- `scripts/` : server Python scripts (arm_server.py, machine_server.py, etc.)
-- 
+- `scripts/` : server Python scripts (arm_dummy_server.py, camera_dummy_server.py, etc.)
 ## Quick start
 1. Create and activate Python virtualenv:
    ```bash
