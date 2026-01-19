@@ -14,7 +14,7 @@ def control():
         # Simulate movement
         return f"[DEBUG] Top carousel Moved to {angle} degrees.\n"
 
-    return "[DEBUG] Dummy Top carouselrunning.\n"
+    return "[DEBUG] Dummy Top carousel running.\n"
 
 if __name__ == '__main__':
     # Listen on all interfaces like the Arduino

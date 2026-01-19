@@ -25,7 +25,7 @@ def process_command(cmd):
     else:
         response = f"Received cmd {cmd} | Unknown command"
     
-    print(f"[DEBUG] PLC | {response}")
+    print(f"[DEBUG] pH meter | {response}")
     return format_response(response)
 
 
