@@ -1,4 +1,15 @@
 from flask import Flask, request, jsonify
+import time
+
+class PipetteBotState:
+    def __init__(self):
+        self.X_axis = 0.0
+        self.Y_axis = 0.0
+        self.Z_axis = 0.0
+        self.GRIPPER = 0
+
+
+state = PipetteBotState()
 
 app = Flask(__name__)
 
@@ -8,9 +19,13 @@ def send_gcode():
     if not data or 'gcode' not in data:
         return jsonify({"error": "Missing 'gcode' in request"}), 400
 
-    response = "[DEBUG] Gcode sent."
+    gcode = data['gcode'].replace(" ", "")
+    state.X_axis = float(gcode.split("X")[1].split("Y")[0])
+    state.Y_axis = float(gcode.split("Y")[1].split("Z")[0])
+    state.Z_axis = float(gcode.split("Z")[1])
+    response = "[DEBUG] Gcode sent.";time.sleep(1)
+    print(gcode)
     return jsonify({"sent": data['gcode'], "response": response})
-
 
 @app.route('/unlock', methods=['POST'])
 def unlock():
@@ -20,8 +35,12 @@ def unlock():
 
 @app.route('/home', methods=['POST'])
 def home():
-    response = "[DEBUG] Home coomand sent."
-    return jsonify({"sent": "$H", "response": response})
+    response = "[DEBUG] Home coomand sent.";time.sleep(4)
+    state.X_axis = 0.0
+    state.Y_axis = 0.0 
+    state.Z_axis = 0.0
+    return jsonify({"sent": "$H", "message": response})
+
 
 
 @app.route('/settings', methods=['GET'])
@@ -32,7 +51,7 @@ def settings():
 
 @app.route('/status', methods=['GET'])
 def status():
-    response = "[DEBUG] Status"
+    response = f"[DEBUG] X{state.X_axis}Y{state.Y_axis}Z{state.Z_axis}GRIPPER{state.GRIPPER}"
     return jsonify({"sent": "?", "response": response})
 
 
