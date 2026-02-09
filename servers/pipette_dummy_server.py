@@ -25,6 +25,7 @@ def send_gcode():
     state.Z_axis = float(gcode.split("Z")[1])
     response = "[DEBUG] Gcode sent.";time.sleep(1)
     print(gcode)
+    print(f"[DEBUG] X{state.X_axis}Y{state.Y_axis}Z{state.Z_axis}")
     return jsonify({"sent": data['gcode'], "response": response})
 
 @app.route('/unlock', methods=['POST'])
@@ -51,7 +52,8 @@ def settings():
 
 @app.route('/status', methods=['GET'])
 def status():
-    response = f"[DEBUG] X{state.X_axis}Y{state.Y_axis}Z{state.Z_axis}GRIPPER{state.GRIPPER}"
+    response = f"[DEBUGss] X{state.X_axis}Y{state.Y_axis}Z{state.Z_axis}GRIPPER{state.GRIPPER}"
+    print(response)
     return jsonify({"sent": "?", "response": response})
 
 
