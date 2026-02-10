@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 import time
+import re
 
 class PipetteBotState:
     def __init__(self):
@@ -18,13 +19,20 @@ def send_gcode():
     data = request.get_json()
     if not data or 'gcode' not in data:
         return jsonify({"error": "Missing 'gcode' in request"}), 400
-
+    
     gcode = data['gcode'].replace(" ", "")
-    state.X_axis = float(gcode.split("X")[1].split("Y")[0])
-    state.Y_axis = float(gcode.split("Y")[1].split("Z")[0])
-    state.Z_axis = float(gcode.split("Z")[1])
-    response = "[DEBUG] Gcode sent.";time.sleep(1)
     print(gcode)
+    pattern = r"X(?P<X>-?\d+(?:\.\d+)?)Y(?P<Y>-?\d+(?:\.\d+)?)Z(?P<Z>-?\d+(?:\.\d+)?)"
+    match = re.search(pattern, gcode)
+    if match:
+        state.X_axis = float(match.group("X"))
+        state.Y_axis = float(match.group("Y"))
+        state.Z_axis = float(match.group("Z"))
+    #state.X_axis = float(gcode.split("X")[1].split("Y")[0])
+    #state.Y_axis = float(gcode.split("Y")[1].split("Z")[0])
+    #state.Z_axis = float(gcode.split("Z")[1])
+    response = "[DEBUG] Gcode sent.";time.sleep(1)
+    
     print(f"[DEBUG] X{state.X_axis}Y{state.Y_axis}Z{state.Z_axis}")
     return jsonify({"sent": data['gcode'], "response": response})
 
@@ -52,8 +60,7 @@ def settings():
 
 @app.route('/status', methods=['GET'])
 def status():
-    response = f"[DEBUGss] X{state.X_axis}Y{state.Y_axis}Z{state.Z_axis}GRIPPER{state.GRIPPER}"
-    print(response)
+    response = f"X{state.X_axis}Y{state.Y_axis}Z{state.Z_axis}GRIPPER{state.GRIPPER}"
     return jsonify({"sent": "?", "response": response})
 
 
