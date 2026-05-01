@@ -17,10 +17,10 @@ def process_command(cmd):
 
     cmd = cmd.strip()
 
-    if cmd == "1":
+    if cmd == "0":
         action = "press button 1"
 
-    elif cmd == "press button 2":
+    elif cmd == "1":
         action = "servo_move_down"
 
     else:

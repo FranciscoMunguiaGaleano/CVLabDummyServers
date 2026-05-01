@@ -15,8 +15,8 @@ servers = [
     "ph_dummy_server.py", #127.0.0.1:5010
     "pumps_dummy_server.py", #127.0.0.1:5011
     "echem_aux_dummy_server.py", #127.0.0.1:5012
-    "ph_toledo_dummy_server,py", #127.0.0.1:5013
-    "ph_toledo_aux_dummy_server.py" #127.0.0.1:5014
+    "ph_toledo_dummy_server.py", #127.0.0.1:5013
+    "ph_toledo_aux_dummy_server.py", #127.0.0.1:5014
     "potentiostats_dummy_server.py" #127.0.0.1:5015
 ]
 
